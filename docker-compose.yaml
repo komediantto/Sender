@@ -1,0 +1,52 @@
+version: '3.6'
+
+x-function: &python
+  volumes:
+    - ./app:/app:rw
+    - poetry-volume:/opt/poetry:delegated
+  user: "${USER_ID}"
+  environment: &env-vars
+    POETRY_HOME: /opt/poetry
+  networks:
+    - internal
+  env_file:
+    .env
+
+services:
+  app_db:
+    container_name: ${PROJECT_SLUG}_db
+    image: postgres:11
+    volumes:
+      - app_db-p2p:/var/lib/postgresql/data/pgdata:rw
+    env_file:
+      - .env
+    networks:
+      - internal
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_HOST_AUTH_METHOD: trust
+      PGDATA: /var/lib/postgresql/data/pgdata
+
+
+  app:
+    <<: *python
+    container_name: ${PROJECT_SLUG}_app
+    build:
+      context: .
+      dockerfile: backend.dockerfile
+    env_file:
+      - .env
+    expose:
+      - 80
+    stdin_open: true # docker run -i
+    tty: true
+    restart: always
+    depends_on:
+      - app_db
+
+volumes:
+  app_db-p2p:
+  poetry-volume:
+
+networks:
+  internal:

@@ -1,0 +1,33 @@
+[tool.poetry]
+name = "teleton1"
+version = "0.1.0"
+description = ""
+authors = ["user <bav-574@mail.ru>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+aiogram = "3.0.0b7"
+async-sqlalchemy = "^1.0.0"
+asyncpg = "^0.27.0"
+python-dotenv = "^0.21.1"
+psycopg2 = "^2.9.5"
+sqlalchemy = "^2.0.3"
+pydantic = "^1.10.5"
+dependency-injector = "^4.41.0"
+alembic = "^1.9.4"
+watchdog = "^2.3.0"
+rollbar = "^0.16.3"
+loguru = "^0.6.0"
+asgiref = "^3.6.0"
+pyrogram = "^2.0.102"
+uvloop = "^0.17.0"
+
+
+[tool.poetry.group.dev.dependencies]
+flake8 = "^6.0.0"
+autopep8 = "^2.0.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
